@@ -19,6 +19,7 @@ public class GUI {
 	private ChatPanel cP;
 	// Look I changed Something
 	// Even more changes
+	// EVEN MORE CHANGES
 	
 	public GUI() throws IOException {
 		Frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
