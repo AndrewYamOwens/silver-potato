@@ -20,6 +20,7 @@ public class Square {
 			button.setIcon(currentIcon);
 			
 			
+			
 		}
 		
 		public void setOccupied(boolean Occupied) {
@@ -70,5 +71,9 @@ public class Square {
 		public boolean hasMoved() {
 			return piece.getHasMoved();
 		}
-		
+		public void iconSize() {
+			int x = currentIcon.getIconWidth(); 
+			int y = currentIcon.getIconHeight();
+			System.out.println("-+-+-+-+-+-+ Icon X:" + x + "    Icon Y:" + y + "  -+-+-+-+-+-+");
+		}
 }
