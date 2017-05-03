@@ -78,7 +78,9 @@ public class GUI implements ActionListener {
 		
 	}
 	
-	
+	public Game getGame() {
+		return g;
+	}
 	
 	public Board getBoard() {
 		return g.getBoard();
@@ -98,9 +100,10 @@ public class GUI implements ActionListener {
 			con.conSet(Frame);
 		}
 		
-		
-		
-		
+	}
+	
+	public void updateTurn(char t) {
+		g.updateTLabel(t);
 	}
 	
 	public static void main(String[] args) throws IOException {

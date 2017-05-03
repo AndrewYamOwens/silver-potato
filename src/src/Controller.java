@@ -114,6 +114,14 @@ public class Controller extends JFrame implements ActionListener {
 		String port = (String)JOptionPane.showInputDialog(Frame, "Please Enter Desired Port");
 		System.out.println("Entered Port: " + port);
 	}
+	
+	public void submit(char t) {
+		if (t == 'w') {
+			gui.updateTurn('b');
+		} else {
+			gui.updateTurn('w');
+		}
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
