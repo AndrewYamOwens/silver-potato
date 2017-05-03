@@ -1,10 +1,18 @@
 package src;
 
+import java.io.File;
+import java.io.IOException;
+
 public class Pawn extends Piece {
 	
 	public Pawn(int x, int y, char side, PieceType type, int offset) {
 		super(x, y, side, type, offset);
-		setImage(getSide());
+		try {
+			setImage(getSide());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
@@ -26,15 +34,21 @@ public class Pawn extends Piece {
 		}
 	}
 	
-	private String getSide() {
+	private String getSide() throws IOException {
 		String path = null;
+		String finalPath = null;
+		File currentDir = new File(".");
+		String basePath = currentDir.getCanonicalPath();
+
 		if (side == 'w') {
-			path = "C:\\Users\\Yam\\workspace\\Chess\\src\\piecePictures\\white_pawn.png";
-		} 
-		if (side == 'b') {
-			path = "C:\\Users\\Yam\\workspace\\Chess\\src\\piecePictures\\black_pawn.png";
+			path = "\\src\\piecePictures\\white_pawn.png";
+			finalPath = basePath.concat(path);
 		}
-		return path;
+		if (side == 'b') {
+			path = "\\src\\piecePictures\\black_pawn.png";
+			finalPath = basePath.concat(path);
+		}
+		return finalPath;
 	}
 
 }

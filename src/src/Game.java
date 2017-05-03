@@ -6,9 +6,11 @@ import java.awt.GridBagLayout;
 import java.io.IOException;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class Game {
+	JFrame frame;
 	Piece wPieces[] = new Piece[16];
 	Piece bPieces[] = new Piece[16];
 	Piece pList[];
@@ -18,9 +20,13 @@ public class Game {
 	Dimension d = new Dimension(0,0);
 	int minX;
 	int minY;
+	Communicator com;
+	Controller con;
 	
-	public Game() throws IOException {
-		
+	public Game(JFrame frame, Communicator com, Controller con) throws IOException {
+		this.frame = frame;
+		this.com = com;
+		this.con = con;
 	}
 	
 	public void gameSetUp() {
@@ -32,15 +38,15 @@ public class Game {
 	}
 	
 	private void gameGUI() {
-		Board b = new Board();
+		Board b = new Board(frame, con, com);
 		cB = b;
 		JPanel board = b.getChessBoard();
+//		System.out.println("____________ dim X:" + board.getWidth() + " dim Y:" + board.getHeight() + "____________");
 		board.setMaximumSize(b.getMinSize());
 		gui.setLayout(new GridBagLayout());
+		System.out.println("board X:" + board.getWidth() + " board Y:" + board.getHeight());
 		GridBagConstraints c = new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.ipadx = (int) b.getSizeX();
-		c.ipady = (int) b.getSizeY();
+		c.fill = GridBagConstraints.NONE;
 		c.gridx = 0;
 		c.gridy = 0;
 		c.gridheight = 3;
@@ -49,10 +55,10 @@ public class Game {
 		gui.add(board, c);
 		updateMinSize(b.getMinSize());
 		System.out.println("dim X:" + d.getWidth() + " dim Y:" + d.getHeight());
-		gui.setMinimumSize(d);
+
 		
 		JButton button = new JButton("Commit Move");
-		button.setMinimumSize(new Dimension(80,40));
+		button.setMinimumSize(new Dimension(120,40));
 		c.fill = GridBagConstraints.NONE;
 		c.ipady = 20;
 		c.ipadx = 0;
@@ -62,8 +68,7 @@ public class Game {
 		c.gridwidth = 1;
 		gui.add(button, c);
 		updateMinSize(button.getMinimumSize());
-		
-		System.out.println("MinX:" + minX + "   MinY: " + minY);
+
 		updateMinSize(minX, minY);
 		System.out.println("Size of Screen");
 		System.out.println("dim X:" + d.getWidth() + " dim Y:" + d.getHeight());		
@@ -93,6 +98,10 @@ public class Game {
 				a++;
 			}
 		}
+	}
+	
+	public Board getBoard() {
+		return cB;
 	}
 	
 	public JPanel getGameGui() {

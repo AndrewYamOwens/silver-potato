@@ -20,7 +20,7 @@ public class Board extends JFrame implements ActionListener {
 //	private final JLabel message = new JLabel("Test Board");
 	protected boolean pieceClick = false;
 	protected Square selectedPieceLocation;
-	protected JFrame Frame = new JFrame("Socket Chess");
+	JFrame Frame;
 	protected JMenuBar menu;
 	protected JMenu chat;
 	protected JRadioButtonMenuItem host, client;
@@ -31,42 +31,37 @@ public class Board extends JFrame implements ActionListener {
 	public Piece[] pieceList = new Piece[32];
 	private char curTurn = 'w';
 	Dimension dim = new Dimension(0,0);
+	Controller con;
+	Communicator com;
 	
 	
-	public Board(){
-//		Frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	public Board(JFrame Frame, Controller con, Communicator com){
+		this.Frame = Frame;
+		this.con = con;
+		this.com = com;
 		initialize();
 	}
 	
 	public final void initialize()   {
 		System.out.println("Initialize Start");
-// GUI	GridBagConstraints c = new GridBagConstraints();
-//		Frame.setLayout(new GridLayout(1,2));
 		
-//		gui.setBorder(new EmptyBorder(5,5,5,5));
-		chessBoard = new JPanel(new GridLayout(0,8));
-		
+		chessBoard = new JPanel(new GridLayout(8,8));
+		chessBoard.setPreferredSize(new Dimension(480 , 480));
 		buttonSetUp();
-		pieceSetup();
+		
 		
 	}	
 		
-//		newMsg.setSize(340, 30);
-		
-//		Send.setSize(95, 30);
-		
-//		Send.setActionCommand("Send");
+
 	private void buttonSetUp() {
-		
+			Dimension max = new Dimension(60, 60);
 			for (int i = 0; i < squares.length; i++) {
 				for (int j = 0; j < squares[i].length; j++) {
 					JButton b = new JButton();
 					b.addActionListener(this);
 					b.setActionCommand("button");
-//					System.out.println("4");
-	//b.setMargin(bMargin);
-					
-					b.setSize(60, 60);
+					b.setPreferredSize(max);
+					System.out.println("Button Height:" + b.getHeight());
 					if ((j % 2 == 1 && i % 2 == 1) || (j % 2 == 0 && i % 2 == 0)) {
 						b.setBackground(Color.WHITE);
 					} else {
@@ -75,18 +70,22 @@ public class Board extends JFrame implements ActionListener {
 					Square squ = new Square(b, j, i);
 					squares[i][j] = squ;
 				}
-				updateMinSize(dim.getHeight() + 60, dim.getWidth() + 60);
+				updateMinSize(dim.getHeight() + 61, dim.getWidth() + 61);
 	 		}
+			
+			pieceSetup();
+			
 			System.out.println("dim X:" + dim.getWidth() + " dim Y:" + dim.getHeight());
 			for (int i = 0; i < squares.length; i++) {
 				for (int j = 0; j < squares[i].length; j++) {
+					System.out.println("Squares x:" + squares[i][j].button.getWidth() + "      Squares y:" + squares[i][j].button.getHeight() + "_____________________________________");
 					chessBoard.add(squares[i][j].getButton());
-					
 				}
 			}	
+			chessBoard.setPreferredSize(dim);
 			
-			
-			
+			chessBoard.setMinimumSize(dim);
+//			chessBoard.setSize(dim);
 		}
 	
 /*Piece list values
@@ -123,7 +122,6 @@ public class Board extends JFrame implements ActionListener {
 		//setup white pieces minus pawns
 		p = new King(0,3, 'w', km, 0);
 		squares[0][3].setPiece(p);
-		
 		
 		p = new Queen(0,4,'w', qm, 1);
 		squares[0][4].setPiece(p);
@@ -218,13 +216,21 @@ public class Board extends JFrame implements ActionListener {
 				squares[x][Y].updateIcon();
 			}
 		}
+		
+	//	squares[1][1].iconSize();
+		
 		System.out.println("Piece Setup End");
 	}
 	
 	
 	public void actionPerformed(ActionEvent e) {
+		System.out.println("TEST++++++++++++++++");
 		String action = e.getActionCommand();
-		
+		System.out.println("Action: " + action);
+		if (action.equals("button")) {
+			con.buttonClick(squares, e, curTurn, pieceList);
+		}
+/*		
 		if (action.equals("button")) {
 			System.out.println("++++++++++ BUTTON CLICK ++++++++++");
 			System.out.println("Current Turn:" + curTurn);
@@ -301,18 +307,26 @@ public class Board extends JFrame implements ActionListener {
 			}
 		}
 		
+*/			
+			
 			if (action.equals("host")) {
 			
 			}
 			if (action.equals("client")) {
 			
 			}
+			if (action == "conSet") {
+				System.out.println("------------------------------------------------------------------");
+				
+				
+				
+			}
 		
 		}
 						
-	}
+//	}
 	
-	private void updateTurn() {
+	public void updateTurn() {
 		if (curTurn == 'w') {
 			curTurn = 'b';
 		} else {

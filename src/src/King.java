@@ -1,23 +1,36 @@
 package src;
 
+import java.io.File;
+import java.io.IOException;
+
 public class King extends Piece{
 
 	public King(int x, int y, char side, PieceType type, int i) {
 		super(x, y, side, type, i);
-		setImage(getSide());
+		try {
+			setImage(getSide());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 	}
-	private String getSide() {
+	private String getSide() throws IOException {
 		String path = null;
+		String finalPath = null;
+		File currentDir = new File(".");
+		String basePath = currentDir.getCanonicalPath();
 		
 		if (side == 'w') {
-			path = "C:\\Users\\Yam\\workspace\\Chess\\src\\piecePictures\\white_king.png";
+			path = "\\src\\piecePictures\\white_king.png";
+			finalPath = basePath.concat(path);
 		}
 		if (side == 'b') {
-			path = "C:\\Users\\Yam\\workspace\\Chess\\src\\piecePictures\\black_king.png";
+			path = "\\src\\piecePictures\\black_king.png";
+			finalPath = basePath.concat(path);
 		}
-		return path;
+		return finalPath;
 	}
 	
 }
