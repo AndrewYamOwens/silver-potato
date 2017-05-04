@@ -2,7 +2,6 @@ package src;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.swing.border.*;
@@ -10,13 +9,10 @@ import javax.swing.border.*;
 
 public class GUI implements ActionListener {
 	private final JPanel gui = new JPanel(new BorderLayout(3,3));
-	private JPanel chatPanel = new JPanel(new GridBagLayout());
-	private JPanel chessBoard;
 	protected JFrame Frame = new JFrame("Socket Chess");
 	protected JMenuBar menu;
 	protected JRadioButtonMenuItem host, client;
 	private Game g;
-	private ChatPanel cP;
 	private Communicator c;
 	private Controller con;
 	// Look I changed Something

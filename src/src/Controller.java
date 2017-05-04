@@ -7,7 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-public class Controller extends JFrame implements ActionListener {
+public class Controller extends JFrame {
 	
 	Board board;
 	Square squares[][];
@@ -114,11 +114,7 @@ public class Controller extends JFrame implements ActionListener {
 		String port = (String)JOptionPane.showInputDialog(Frame, "Please Enter Desired Port");
 		System.out.println("Entered Port: " + port);
 	}
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 
 }

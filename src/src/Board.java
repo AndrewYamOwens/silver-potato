@@ -1,20 +1,17 @@
 package src;
-import java.io.*;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.UnknownHostException;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
-
-import javax.swing.border.*;
 
 public class Board extends JFrame implements ActionListener { 
 //	private final JPanel gui = new JPanel(new BorderLayout(3,3));
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static Square[][] squares = new Square[8][8];
 	private JPanel chessBoard;
 //	private final JLabel message = new JLabel("Test Board");
@@ -26,8 +23,6 @@ public class Board extends JFrame implements ActionListener {
 	protected JRadioButtonMenuItem host, client;
 	static ServerSocket chatHost;
 	static Socket socket;
-	private Square selectedSquare;
-	private Piece P;
 	public Piece[] pieceList = new Piece[32];
 	private char curTurn = 'w';
 	Dimension dim = new Dimension(0,0);
@@ -116,9 +111,6 @@ public class Board extends JFrame implements ActionListener {
 		RookMove rm = new RookMove();
 		BishopMove bm = new BishopMove();
 		int offset = 8;
-		int y = 0;
-		
-		
 		//setup white pieces minus pawns
 		p = new King(0,3, 'w', km, 0);
 		squares[0][3].setPiece(p);

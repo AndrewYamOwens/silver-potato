@@ -13,6 +13,10 @@ package src;
 
 
 	public class Host extends JFrame implements ActionListener {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		static ServerSocket host;
 		static Socket soc;
 		JPanel panel;
