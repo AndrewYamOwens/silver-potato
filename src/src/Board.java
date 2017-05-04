@@ -325,7 +325,11 @@ public class Board extends JFrame implements ActionListener {
 			curTurn = 'w';
 		}
 	}
-
+	
+	public char getTurn() {
+		return curTurn;	
+	}
+	
 	public Piece[] getPL() {
 		return pieceList;
 	}

@@ -116,5 +116,16 @@ public class Controller extends JFrame {
 	}
 	
 
-
+	public void submit(char t) {
+		if (t == 'w') {
+			gui.updateTurn('b');
+		} else {
+			gui.updateTurn('w');
+		}
+	}
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+		
+	}
 }
