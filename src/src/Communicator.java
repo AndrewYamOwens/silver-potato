@@ -81,8 +81,8 @@ public class Communicator {
 			try {
 				is = new DataInputStream(soc.getInputStream());
 				String string = is.readUTF();
-				pListDecode(string);
-				System.out.println("Data Recieved from opponet: " + string);
+				;
+				g.updateBoard(pListDecode(string));
 			} catch (Exception e1) {
 				try {
 					Thread.sleep(3000);
