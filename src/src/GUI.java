@@ -3,6 +3,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
+import java.net.UnknownHostException;
 
 import javax.swing.border.*;
 
@@ -41,10 +42,12 @@ public class GUI implements ActionListener {
 		menu.add(conMenu);
 		
 		JRadioButtonMenuItem host = new JRadioButtonMenuItem("Host");
+		host.addActionListener(this);
 		host.setActionCommand("host");
 		chat.add(host);
 		
 		JRadioButtonMenuItem client = new JRadioButtonMenuItem("Client");
+		client.addActionListener(this);
 		client.setActionCommand("client");
 		chat.add(client);
 		
@@ -89,6 +92,14 @@ public class GUI implements ActionListener {
 		this.con = con;
 	}
 	
+	public void updateTurn(char t) {
+		g.updateTLabel(t);
+	}
+	
+	public JFrame getFrame() {
+		return Frame;
+	}
+	
 	public void actionPerformed(ActionEvent e) {
 		String action = e.getActionCommand();
 		
@@ -96,11 +107,30 @@ public class GUI implements ActionListener {
 			con.conSet(Frame);
 		}
 		
+		if (action == "host") {
+			try {
+				c.hostConnect();
+			} catch (UnknownHostException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		
+		if (action == "client") {
+			try {
+				c.clientConnect();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		
 	}
 	
-	public void updateTurn(char t) {
-		g.updateTLabel(t);
-	}
+
 	
 	public static void main(String[] args) throws IOException {
 		GUI gu = new GUI();
@@ -118,6 +148,8 @@ public class GUI implements ActionListener {
 		con.setGUI(gu);
 		
 		gu.startGUI();
+		
+		com.startConnection();
 		//System.out.println("2");
 
 		//System.out.println("3");

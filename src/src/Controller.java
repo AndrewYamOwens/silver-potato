@@ -1,12 +1,12 @@
 package src;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+@SuppressWarnings("serial")
 public class Controller extends JFrame {
 	
 	Board board;
@@ -17,7 +17,8 @@ public class Controller extends JFrame {
 	GUI gui;
 	Communicator com;
 	Piece P;
-		
+	String ip;
+	String port;
 	
 	Controller() {
 		
@@ -109,12 +110,21 @@ public class Controller extends JFrame {
 	//No error checking yet. Will be set up when the communicator is finished.
 	public void conSet(JFrame Frame) {
 		
-		String ip = (String)JOptionPane.showInputDialog(Frame, "Please Enter Desired IP");
+		ip = (String)JOptionPane.showInputDialog(Frame, "Please Enter Desired IP");
 		System.out.println("Entered IP: " + ip);
-		String port = (String)JOptionPane.showInputDialog(Frame, "Please Enter Desired Port");
+		port = (String)JOptionPane.showInputDialog(Frame, "Please Enter Desired Port");
 		System.out.println("Entered Port: " + port);
+		
 	}
 	
+	public String getIP() {
+		return ip;
+	}
+	
+	public String getPort() {
+		return port;
+	}
+	 
 
 	public void submit(char t) {
 		if (t == 'w') {
