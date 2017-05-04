@@ -157,7 +157,7 @@ public class GUI implements ActionListener {
 		
 		gu.startGUI();
 		
-//		com.startConnection();
+		com.startConnection();
 		//System.out.println("2");
 
 		//System.out.println("3");
