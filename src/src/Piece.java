@@ -8,7 +8,7 @@ import javax.imageio.ImageIO;
 
 
 
-public abstract class Piece {
+public class Piece {
 		
 		protected PieceType type;
 		
@@ -27,8 +27,16 @@ public abstract class Piece {
 		protected int id;
 		protected Square destS;
 		protected boolean captured;
+		protected char typeC;
 		
-		
+		public Piece() {
+			x = 0;
+			y = 0;
+			side = '.';
+			type = null;
+			id = 0;
+			
+		}
 		
 		public Piece(int y, int x, char side, PieceType type, int id) {
 			this.x = x;
@@ -39,7 +47,55 @@ public abstract class Piece {
 			hasMoved = false;
 		}
 		
+		public Piece(String s) {
+			String[] token = s.split("/");
+			this.id = Integer.parseInt(token[0]);
+			this.x = Integer.parseInt(token[1]);
+			this.y = Integer.parseInt(token[2]);
+			this.type = setPType(token[3]);
+			this.side = token[4].charAt(0);
+			
+			if (token[5] == "t") {
+				this.hasMoved = true;
+			} else { 
+				this.hasMoved = false;
+			}
+			
+		}
+
 		
+		
+		private PieceType setPType(String s) {
+			if (s == "K") {
+				KingMove km = new KingMove();
+				return km;
+			}
+			
+			if (s == "q") {
+				QueenMove qm = new QueenMove();
+				return qm;
+			}
+			
+			if (s == "k") {
+				KnightMove nm = new KnightMove();
+				return nm;
+			}
+			
+			if (s == "r") {
+				RookMove rm = new RookMove();
+				return rm;
+			}
+			
+			if (s == "b") {
+				BishopMove bm = new BishopMove();
+				return bm;
+			} else {
+				PawnMove pm = new PawnMove();
+				return pm;
+			}
+
+		}
+
 		public boolean checkMove(Piece[] pl) {
 			boolean check = type.moveCheck(x, y, destX, destY, side, hasMoved, pl);  ;
 			System.out.println("Move Check- X:" + x + " y:" + y);
@@ -118,5 +174,29 @@ public abstract class Piece {
 		}
 		public boolean getHasMoved() {
 			return hasMoved;
+		}
+		
+		public String pL_Entry() {
+			String entry = "";
+			entry = entry.concat(Integer.toString(id));
+			entry = entry + "/";
+			entry = entry.concat(Integer.toString(x));
+			entry = entry + "/";
+			entry = entry.concat(Integer.toString(y));
+			entry = entry + "/";
+			entry = entry + typeC;
+			entry = entry + "/";
+			entry = entry + side;
+			entry = entry + "/";
+			
+			if (hasMoved == true) {
+				entry = entry + "t";
+			} else { 
+				entry = entry + "f";
+			}
+			
+			
+			return entry;
+			
 		}
 }

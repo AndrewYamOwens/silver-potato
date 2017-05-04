@@ -85,6 +85,14 @@ public class GUI implements ActionListener {
 		return g.getBoard();
 	}
 	
+	public Piece[] getPieceList() {
+		return g.getPList();
+	}
+	
+	public void updateBoard(Piece[] pL) {
+		g.updateBoard(pL);
+	}
+	
 	private void addCommunicator(Communicator c) {
 		this.c = c;
 	}
@@ -149,7 +157,7 @@ public class GUI implements ActionListener {
 		
 		gu.startGUI();
 		
-		com.startConnection();
+//		com.startConnection();
 		//System.out.println("2");
 
 		//System.out.println("3");

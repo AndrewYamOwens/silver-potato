@@ -7,6 +7,7 @@ public class Knight extends Piece {
 	
 	public Knight(int x, int y, char side, PieceType type, int i) {
 		super(x, y, side, type, i);
+		typeC = 'k';
 		try {
 			setImage(getSide());
 		} catch (IOException e) {

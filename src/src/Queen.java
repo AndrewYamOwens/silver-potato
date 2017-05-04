@@ -6,6 +6,7 @@ import java.io.IOException;
 public class Queen extends Piece {
 	public Queen(int x, int y, char side, PieceType type, int i) {
 		super(x, y, side, type, i);
+		typeC = 'q';
 		try {
 			setImage(getSide());
 		} catch (IOException e) {

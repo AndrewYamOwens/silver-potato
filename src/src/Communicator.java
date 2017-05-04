@@ -17,6 +17,8 @@ public class Communicator {
 	Controller c;
 	int port = 0;
 	InetAddress ip;
+	String message;
+	Piece p = new Piece();
 	
 	public Communicator() {
 		
@@ -49,8 +51,9 @@ public class Communicator {
 			try {
 				is = new DataInputStream(soc.getInputStream());
 				String string = is.readUTF();
-				System.out.println("Data Recieved from opponet: " + string);
+				pListDecode(string);
 			} catch (Exception e1) {
+				
 				
 				try {
 					Thread.sleep(3000);
@@ -78,6 +81,7 @@ public class Communicator {
 			try {
 				is = new DataInputStream(soc.getInputStream());
 				String string = is.readUTF();
+				pListDecode(string);
 				System.out.println("Data Recieved from opponet: " + string);
 			} catch (Exception e1) {
 				try {
@@ -97,6 +101,46 @@ public class Communicator {
 	public void setController(Controller con) {
 		this.c = con;
 	}
+
+	public void sendMessage() {
+		Piece[] pl = g.getPieceList();
+		String encodedMessage = pListEncode(pl);
+		
+		DataOutputStream os;
+		try {
+			os = new DataOutputStream(soc.getOutputStream());
+			os.writeUTF(encodedMessage);
+		} catch (Exception e1) {
+			try {
+				Thread.sleep(3000);
+				System.exit(0);
+			} catch (InterruptedException e2) {
+				e2.printStackTrace();
+			}
+		}
+	}	
+
 	
+	private String pListEncode(Piece[] pL) {
+		message = "";
+		for (int x = 0; x < 16; x++) {
+			message = message.concat(pL[x].pL_Entry());
+			message = message + ";";
+		}
+		
+		return message;
+		
+	}
 	
-}
+	private Piece[] pListDecode(String s) {
+		Piece newPL[] = new Piece[16];
+		String[] pieceData = s.split(";");
+		
+		for (int x = 0; x < 16; x++) {
+			p = new Piece(pieceData[x]);
+			newPL[x] = p;
+		}
+		
+		return newPL;
+	}
+}	

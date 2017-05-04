@@ -110,6 +110,10 @@ public class Game implements ActionListener {
 			pList = b.getPL();
 	}
 	
+	public Piece[] getPList() {
+		return pList;
+	}
+	
 	private void set_wPieces() {
 		int a = 0;
 		for (int x = 0; x < 32; x++) {
@@ -158,6 +162,10 @@ public class Game implements ActionListener {
 		if (s == "submit") {
 			con.submit(currentTurn);
 		}
+	}
+
+	public void updateBoard(Piece[] pL) {
+		cB.updateBoard(pL);
 	}
 	
 	

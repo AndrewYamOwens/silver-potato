@@ -7,6 +7,7 @@ public class Bishop extends Piece {
 	
 	public Bishop(int x, int y, char side, PieceType type, int i) {
 		super(x, y, side, type, i);
+		typeC = 'b';
 		try {
 			setImage(getSide());
 		} catch (IOException e) {

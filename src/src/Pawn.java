@@ -7,6 +7,7 @@ public class Pawn extends Piece {
 	
 	public Pawn(int x, int y, char side, PieceType type, int offset) {
 		super(x, y, side, type, offset);
+		typeC = 'p';
 		try {
 			setImage(getSide());
 		} catch (IOException e) {

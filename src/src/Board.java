@@ -318,6 +318,21 @@ public class Board extends JFrame implements ActionListener {
 						
 //	}
 	
+	public void updateBoard(Piece[] pL) {
+		pieceList = pL;
+		
+		for (int i = 0; i < 32; i++) {
+			for (int j = 0; j < 32; j++) {
+				squares[i][j].setIcon(null);
+			}
+		}
+		
+		for (int x = 0; x < 16; x++) {
+			squares[pieceList[x].getX()][pieceList[x].getY()].setIcon(pieceList[x].getSymbol());
+		}
+	}
+	
+	
 	public void updateTurn() {
 		if (curTurn == 'w') {
 			curTurn = 'b';

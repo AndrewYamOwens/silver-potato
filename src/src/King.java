@@ -7,6 +7,7 @@ public class King extends Piece{
 
 	public King(int x, int y, char side, PieceType type, int i) {
 		super(x, y, side, type, i);
+		typeC = 'K';
 		try {
 			setImage(getSide());
 		} catch (IOException e) {

@@ -7,6 +7,7 @@ public class Rook extends Piece {
 	
 	public Rook(int x, int y, char side, PieceType type, int i) {
 		super(x, y, side, type, i);
+		typeC = 'r';
 		try {
 			setImage(getSide());
 		} catch (IOException e) {

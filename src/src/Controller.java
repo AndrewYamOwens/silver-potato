@@ -110,7 +110,7 @@ public class Controller extends JFrame {
 	//No error checking yet. Will be set up when the communicator is finished.
 	public void conSet(JFrame Frame) {
 		
-		ip = (String)JOptionPane.showInputDialog(Frame, "Please Enter Desired IP");
+		ip = (String)JOptionPane.showInputDialog(Frame, "Please Enter Host IP");
 		System.out.println("Entered IP: " + ip);
 		port = (String)JOptionPane.showInputDialog(Frame, "Please Enter Desired Port");
 		System.out.println("Entered Port: " + port);
@@ -132,6 +132,8 @@ public class Controller extends JFrame {
 		} else {
 			gui.updateTurn('w');
 		}
+		
+		com.sendMessage();
 	}
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
