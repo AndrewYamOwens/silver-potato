@@ -26,7 +26,7 @@ public class Communicator {
 	
 	public void startConnection() {
 		try {
-			hostConnect();
+			clientConnect();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
