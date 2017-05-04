@@ -133,6 +133,7 @@ public class Communicator {
 	}
 	
 	private Piece[] pListDecode(String s) {
+		System.out.println("Encoded String: " + s);
 		Piece newPL[] = new Piece[16];
 		String[] pieceData = s.split(";");
 		
@@ -140,7 +141,6 @@ public class Communicator {
 			p = new Piece(pieceData[x]);
 			newPL[x] = p;
 		}
-		
 		return newPL;
 	}
 }	
