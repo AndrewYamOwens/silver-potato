@@ -51,7 +51,7 @@ public class Communicator {
 			try {
 				is = new DataInputStream(soc.getInputStream());
 				String string = is.readUTF();
-				pListDecode(string);
+//				pListDecode(string);
 				g.updateBoard(pListDecode(string));
 			} catch (Exception e1) {
 				
@@ -82,9 +82,12 @@ public class Communicator {
 			try {
 				is = new DataInputStream(soc.getInputStream());
 				String string = is.readUTF();
+				
 				g.updateBoard(pListDecode(string));
 			} catch (Exception e1) {
 				try {
+					System.out.println("Exception e1 happenend :(");
+					Piece[] PL = g.getPieceList();
 					Thread.sleep(3000);
 					System.exit(0);
 				} catch (InterruptedException e) {

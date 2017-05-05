@@ -230,6 +230,12 @@ public class Board extends JFrame implements ActionListener {
 	public void updateBoard(Piece[] pL) {
 		pieceList = pL;
 		
+		System.out.println("----------- PieceList piece locations -----------");
+		for (int x = 0; x < 32; x++) {
+			System.out.print(pieceList[x].getId() + ":(" + pieceList[x].getX() + "," + pieceList[x].getY() + ") ");
+		}
+		System.out.println("");
+		
 		for (int i = 0; i < 32; i++) {
 			for (int j = 0; j < 32; j++) {
 				squares[i][j].setIcon(null);

@@ -86,6 +86,14 @@ public class GUI implements ActionListener {
 	}
 	
 	public Piece[] getPieceList() {
+		Piece[] pl = g.getPList();
+		System.out.println("----------- PieceList piece locations -----------");
+		for (int x = 0; x < 32; x++) {
+			System.out.print(pl[x].getId() + ":(" + pl[x].getX() + "," + pl[x].getY() + ") ");
+		}
+		System.out.println("");
+		
+		
 		return g.getPList();
 	}
 	
