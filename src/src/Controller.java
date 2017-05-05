@@ -1,13 +1,17 @@
 package src;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 @SuppressWarnings("serial")
-public class Controller extends JFrame {
+public class Controller extends JFrame implements ActionListener {
 	
 	Board board;
 	Square squares[][];
@@ -19,6 +23,7 @@ public class Controller extends JFrame {
 	Piece P;
 	String ip;
 	String port;
+	JFrame Frame;
 	
 	Controller() {
 		
@@ -67,12 +72,15 @@ public class Controller extends JFrame {
 							System.out.println("Move check:" + vM);
 							System.out.println("Piece type:" + P.getId());
 							if(vM == true) {
-								board.updateTurn();
+//								board.updateTurn();
 								System.out.println("Current Turn:" + curTurn);
 								if (squares[i][j].getOccupied() == true) {
 									for (int x = 0; x < 32; x++) {
-										if (pieceList[x].checkLocation(squares[i][j].getPiece()) == true) {
-											pieceList[x].setCaptured(true);
+										if (squares[i][j].getX() == pieceList[x].getX() && squares[i][j].getY() == pieceList[x].getY() 
+												&& pieceList[x].getId() != squares[i][j].getPieceId()) {
+											P = squares[i][j].getPiece();
+											P.setCaptured(true);
+											
 										}
 									}
 								}
@@ -108,7 +116,7 @@ public class Controller extends JFrame {
 		}	
 	}
 	//No error checking yet. Will be set up when the communicator is finished.
-	public void conSet(JFrame Frame) {
+	public void clientConSet(JFrame Frame) {
 		
 		ip = (String)JOptionPane.showInputDialog(Frame, "Please Enter Host IP");
 		System.out.println("Entered IP: " + ip);
@@ -117,27 +125,73 @@ public class Controller extends JFrame {
 		
 	}
 	
+	public void hostConSet(JFrame Frame) {
+		
+		String mes = "Your IP:";
+		
+		
+		try {
+			ip = InetAddress.getLocalHost().toString();
+			
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		mes = mes.concat(ip);
+		System.out.println(mes);
+		JOptionPane.showMessageDialog(Frame, mes );
+		
+		port = (String)JOptionPane.showInputDialog(Frame, "Please Enter Desired Port");
+		System.out.println("Entered Port: " + port);
+		
+		try {
+			com.hostConnect();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void launchPrompt(JFrame Frame) {
+		Object[] options = {"Host", "Client"};
+		String s = (String) JOptionPane.showInputDialog(Frame, "Select connection type", "Connection Type"
+				, JOptionPane.PLAIN_MESSAGE, null, options, "Host");
+		
+		if (s == null) { launchPrompt(Frame); }
+		
+		if (s == "Host") {
+			hostConSet(Frame);
+		}
+		
+		if (s == "Client") {
+			clientConSet(Frame);
+		}
+		if (s != null && s != "Host" && s != "Client") {
+			JOptionPane.showMessageDialog(Frame, "---ERROR: User managed to break launchPrompt---");
+		}
+		
+	}
+		
+	
+	
 	public String getIP() {
+//ip = "10.0.0.60";
 		return ip;
 	}
 	
 	public String getPort() {
+//port = "1234";
 		return port;
 	}
 	 
 
 	public void submit(char t) {
-		if (t == 'w') {
-			gui.updateTurn('b');
-		} else {
-			gui.updateTurn('w');
-		}
-		
+//		gui.updateTurn(t);
 		com.sendMessage();
 	}
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
 		
 	}
 }

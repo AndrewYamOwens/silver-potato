@@ -16,6 +16,20 @@ public class Rook extends Piece {
 		}
 		
 	}
+	
+	public Rook(int x, int y, char side, PieceType type, int i, boolean hasMoved)	{
+		super(x, y, side, type, i, hasMoved);
+		typeC = 'r';
+		try {
+			setImage(getSide());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
 	private String getSide() throws IOException {
 		String path = null;
 		String finalPath = null;

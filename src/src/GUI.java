@@ -10,7 +10,7 @@ import javax.swing.border.*;
 
 public class GUI implements ActionListener {
 	private final JPanel gui = new JPanel(new BorderLayout(3,3));
-	protected JFrame Frame = new JFrame("Socket Chess");
+	protected JFrame Frame = new JFrame("Socket Chess - Client");
 	protected JMenuBar menu;
 	protected JRadioButtonMenuItem host, client;
 	private Game g;
@@ -104,6 +104,14 @@ public class GUI implements ActionListener {
 		g.updateTLabel(t);
 	}
 	
+	public void updateTurn() {
+		if (g.getTurn() == 'w') {
+			g.updateTurn('b');
+		} else {
+			g.updateTurn('w');
+		}
+	}
+	
 	public JFrame getFrame() {
 		return Frame;
 	}
@@ -112,7 +120,7 @@ public class GUI implements ActionListener {
 		String action = e.getActionCommand();
 		
 		if (action == "conSet") {
-			con.conSet(Frame);
+			con.clientConSet(Frame);
 		}
 		
 		if (action == "host") {
@@ -142,6 +150,7 @@ public class GUI implements ActionListener {
 	
 	public static void main(String[] args) throws IOException {
 		GUI gu = new GUI();
+		
 		Communicator com = new Communicator();
 		Controller con = new Controller();
 		
@@ -157,7 +166,9 @@ public class GUI implements ActionListener {
 		
 		gu.startGUI();
 		
-		com.startConnection();
+		com.startConnection(gu.getFrame());
+		
+		
 		//System.out.println("2");
 
 		//System.out.println("3");

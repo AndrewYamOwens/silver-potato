@@ -203,17 +203,22 @@ public class Board extends JFrame implements ActionListener {
 		}
 		
 		
-		for (int x = 0; x < 8; x++) {
-			for (int Y = 0; Y < 8; Y++) {
-				squares[x][Y].updateIcon();
-			}
-		}
+		drawBoard();
+		
+	
 		
 	//	squares[1][1].iconSize();
 		
 		System.out.println("Piece Setup End");
 	}
 	
+	private void drawBoard() {
+		for (int x = 0; x < 8; x++) {
+			for (int Y = 0; Y < 8; Y++) {
+				squares[x][Y].updateIcon();
+			}
+		}
+	}
 	
 	public void actionPerformed(ActionEvent e) {
 		System.out.println("TEST++++++++++++++++");
@@ -230,15 +235,32 @@ public class Board extends JFrame implements ActionListener {
 	public void updateBoard(Piece[] pL) {
 		pieceList = pL;
 		
-		for (int i = 0; i < 32; i++) {
-			for (int j = 0; j < 32; j++) {
-				squares[i][j].setIcon(null);
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				squares[i][j].setPiece(null);
 			}
 		}
 		
-		for (int x = 0; x < 16; x++) {
-			squares[pieceList[x].getX()][pieceList[x].getY()].setIcon(pieceList[x].getSymbol());
+		System.out.println("----------- PieceList piece locations -----------");
+		for (int x = 0; x < 32; x++) {
+			System.out.print(pieceList[x].getId() + ":(" + pieceList[x].getX() + "," + pieceList[x].getY() + ") ");
 		}
+		System.out.println("");
+		
+		int X;
+		int Y;
+		
+		for (int x = 0; x < 32; x++) {
+			
+			X = pieceList[x].getX();
+			Y = pieceList[x].getY();
+			System.out.println("PieceList X: " + X + "   Y: " + Y);
+			if (X != 9 && Y != 9) {
+				squares[Y][X].setPiece(pieceList[x]);
+			}
+		}
+		
+		drawBoard();
 	}
 	
 	
@@ -248,6 +270,10 @@ public class Board extends JFrame implements ActionListener {
 		} else {
 			curTurn = 'w';
 		}
+	}
+	
+	public void setTurn(char t) {
+		curTurn = t;
 	}
 	
 	public char getTurn() {

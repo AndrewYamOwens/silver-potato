@@ -17,6 +17,19 @@ public class Pawn extends Piece {
 		
 	}
 	
+	public Pawn(int x, int y, char side, PieceType type, int i, boolean hasMoved)	{
+		super(x, y, side, type, i, hasMoved);
+		typeC = 'p';
+		try {
+			setImage(getSide());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
 	public boolean checkMove(Piece[] pL) {
 		boolean check = type.moveCheck(x, y, destX, destY, side, hasMoved, pL);
 		System.out.println("-------- Pawn moveCheck end -------");

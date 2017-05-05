@@ -8,7 +8,7 @@ import javax.imageio.ImageIO;
 
 
 
-public class Piece {
+public abstract class Piece {
 		
 		protected PieceType type;
 		
@@ -30,11 +30,6 @@ public class Piece {
 		protected char typeC;
 		
 		public Piece() {
-			x = 0;
-			y = 0;
-			side = '.';
-			type = null;
-			id = 0;
 			
 		}
 		
@@ -47,64 +42,28 @@ public class Piece {
 			hasMoved = false;
 		}
 		
-		public Piece(String s) {
-			String[] token = s.split("/");
-			this.id = Integer.parseInt(token[0]);
-			this.x = Integer.parseInt(token[1]);
-			this.y = Integer.parseInt(token[2]);
-			this.type = setPType(token[3]);
-			this.side = token[4].charAt(0);
-			
-			if (token[5] == "t") {
-				this.hasMoved = true;
-			} else { 
-				this.hasMoved = false;
-			}
-			
+		public Piece(int y, int x, char side, PieceType type, int id, boolean hasMoved) {
+			this.x = x;
+			this.y = y;
+			this.side = side;
+			this.type = type;
+			this.id = id;
+			this.hasMoved = hasMoved;
 		}
-
 		
-		
-		private PieceType setPType(String s) {
-			if (s == "K") {
-				KingMove km = new KingMove();
-				return km;
-			}
 			
-			if (s == "q") {
-				QueenMove qm = new QueenMove();
-				return qm;
-			}
-			
-			if (s == "k") {
-				KnightMove nm = new KnightMove();
-				return nm;
-			}
-			
-			if (s == "r") {
-				RookMove rm = new RookMove();
-				return rm;
-			}
-			
-			if (s == "b") {
-				BishopMove bm = new BishopMove();
-				return bm;
-			} else {
-				PawnMove pm = new PawnMove();
-				return pm;
-			}
-
-		}
 
 		public boolean checkMove(Piece[] pl) {
 			boolean check = type.moveCheck(x, y, destX, destY, side, hasMoved, pl);  ;
 			System.out.println("Move Check- X:" + x + " y:" + y);
-			if (check == true && type.captureCheck(x, y, destY, destX, side, destS) == true) {
+			if (check == true) {
 				x = destX;
 				y = destY;
 				hasMoved = true;
+				System.out.println("Piece checkMove = TRUE");
 				return true;
 			} else {
+				System.out.println("Piece checkMove = FALSE");
 				return false;
 			}
 		}
@@ -145,6 +104,9 @@ public class Piece {
 		public boolean checkLocation(Piece p) {
 			// This breaks things but only sometimes
 			// A null pointer exception points to this next line as being the problem
+			if (id == p.getId() || side == p.getColor()) {
+				return false;
+			}
 			if (x == p.getX() && y == p.getY()) {
 				return true;
 			} else {

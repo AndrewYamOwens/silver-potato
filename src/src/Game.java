@@ -103,7 +103,21 @@ public class Game implements ActionListener {
 		}
 		System.out.println("t: " + t);
 		l.setText(turn);
+
 		
+	}
+	
+	public void updateTurn(char t) {
+		updateTLabel(t);
+		
+		currentTurn = t;
+		cB.setTurn(t);
+//		cB.updateTurn();
+		
+	}
+	
+	public char getTurn() {
+		return currentTurn;
 	}
 	
 	private void create_pList(Board b) {
@@ -112,6 +126,10 @@ public class Game implements ActionListener {
 	
 	public Piece[] getPList() {
 		return pList;
+	}
+	
+	public void updatePList(Piece[] npl) {
+		pList = npl;
 	}
 	
 	private void set_wPieces() {
@@ -161,11 +179,13 @@ public class Game implements ActionListener {
 		
 		if (s == "submit") {
 			con.submit(currentTurn);
+//			cB.updateTurn();
 		}
 	}
 
 	public void updateBoard(Piece[] pL) {
 		cB.updateBoard(pL);
+		updatePList(pL);
 	}
 	
 	
