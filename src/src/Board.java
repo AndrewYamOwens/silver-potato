@@ -6,15 +6,10 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Board extends JFrame implements ActionListener { 
-//	private final JPanel gui = new JPanel(new BorderLayout(3,3));
-	
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	private static Square[][] squares = new Square[8][8];
 	private JPanel chessBoard;
-//	private final JLabel message = new JLabel("Test Board");
 	protected boolean pieceClick = false;
 	protected Square selectedPieceLocation;
 	JFrame Frame;
@@ -37,9 +32,42 @@ public class Board extends JFrame implements ActionListener {
 		initialize();
 	}
 	
+	/*Getter and Setter Block
+	 * All functions are pretty self explanatory
+	 */
+	public void setTurn(char t) {
+		curTurn = t;
+	}
+	
+	public char getTurn() {
+		return curTurn;	
+	}
+	
+	public Piece[] getPL() {
+		return pieceList;
+	}
+	
+	public Dimension getMinSize() {
+		return dim;
+	}
+	
+	public double getSizeX() {
+		return dim.getWidth();
+	}
+	public double getSizeY() {
+		return dim.getHeight();
+	}
+	public JPanel getChessBoard() {
+		return chessBoard;
+	}
+	
+	/**
+	 * Initializes the board. Creates and sizes the JPanel and then calls buttonSetUp
+	 * 
+	 */
 	public final void initialize()   {
-		System.out.println("Initialize Start");
-		
+		System.out.println("---initialize Start ---");
+		System.out.println("---Board, Line 40 ---");
 		chessBoard = new JPanel(new GridLayout(8,8));
 		chessBoard.setPreferredSize(new Dimension(480 , 480));
 		buttonSetUp();
@@ -47,9 +75,20 @@ public class Board extends JFrame implements ActionListener {
 		
 	}	
 		
-
+	/**
+	 * buttonSetUp creates the 8x8 grid of buttons that make up the chess board.
+	 * it sets gives all buttons the action command "button"
+	 * it then uses the buttons as they are created and one at a time adds sets the equal to a values in the
+	 * 2d array of squares. This square list serves as the orgainizer of all the buttons into locations on the
+	 * chess board. Next it calls pieceSetUP. After pieceSetUp has done its thing it will add all the buttons to the
+	 * JPanel via the squares 2d array. Finally it sizes the JPanel so that it will be correctly sized overall.
+	 * 
+	 */
 	private void buttonSetUp() {
+		System.out.println("---buttonSetUp Start ---");
+		System.out.println("---Board, Line 51 ---");
 			Dimension max = new Dimension(60, 60);
+			char color;
 			for (int i = 0; i < squares.length; i++) {
 				for (int j = 0; j < squares[i].length; j++) {
 					JButton b = new JButton();
@@ -59,10 +98,12 @@ public class Board extends JFrame implements ActionListener {
 					System.out.println("Button Height:" + b.getHeight());
 					if ((j % 2 == 1 && i % 2 == 1) || (j % 2 == 0 && i % 2 == 0)) {
 						b.setBackground(Color.WHITE);
+						color = 'w';
 					} else {
 						b.setBackground(Color.GRAY);
+						color = 'b';
 					}
-					Square squ = new Square(b, j, i);
+					Square squ = new Square(b, j, i, color);
 					squares[i][j] = squ;
 				}
 				updateMinSize(dim.getHeight() + 61, dim.getWidth() + 61);
@@ -73,14 +114,13 @@ public class Board extends JFrame implements ActionListener {
 			System.out.println("dim X:" + dim.getWidth() + " dim Y:" + dim.getHeight());
 			for (int i = 0; i < squares.length; i++) {
 				for (int j = 0; j < squares[i].length; j++) {
-					System.out.println("Squares x:" + squares[i][j].button.getWidth() + "      Squares y:" + squares[i][j].button.getHeight() + "_____________________________________");
 					chessBoard.add(squares[i][j].getButton());
 				}
 			}	
 			chessBoard.setPreferredSize(dim);
 			
 			chessBoard.setMinimumSize(dim);
-//			chessBoard.setSize(dim);
+
 		}
 	
 /*Piece list values
@@ -100,9 +140,16 @@ public class Board extends JFrame implements ActionListener {
  * Black Queen Side Bishop: 23
  * Black Pawns: 24 - 31
  */
+	/**
+	 * Piece setup creates all the individual pieces and assigns them to their starting squares.
+	 * Each piece is also given an ID which is primarily used for error testing and to identify specific pieces.
+	 * Finally it goes through the square list and sets all locations where pieces were added to have occupied=true
+	 * 
+	 */
 	
 	public void pieceSetup() {
-		System.out.println("Piece SetUp start");
+		System.out.println("---pieceSetup Start ---");
+		System.out.println("---Board, Line 106 ---");
 		Piece p;
 		KingMove km = new KingMove();
 		PawnMove pm = new PawnMove();
@@ -192,6 +239,7 @@ public class Board extends JFrame implements ActionListener {
 			
 		}
 		
+		//Set squares.occupied = true for all squares now containing pieces 
 		int i = 0;
 		for (int x = 0; x < 8; x++) {
 			for (int Y = 0; Y < 8; Y++) {
@@ -207,12 +255,17 @@ public class Board extends JFrame implements ActionListener {
 		
 	
 		
-	//	squares[1][1].iconSize();
 		
 		System.out.println("Piece Setup End");
 	}
 	
+	/**
+	 * drawBoard is the method used to update the icons of all of the buttons in the square 2d array
+	 * 
+	 */
 	private void drawBoard() {
+		System.out.println("---drawBoard Start ---");
+		System.out.println("---Board, Line 218 ---");
 		for (int x = 0; x < 8; x++) {
 			for (int Y = 0; Y < 8; Y++) {
 				squares[x][Y].updateIcon();
@@ -220,19 +273,19 @@ public class Board extends JFrame implements ActionListener {
 		}
 	}
 	
-	public void actionPerformed(ActionEvent e) {
-		System.out.println("TEST++++++++++++++++");
-		String action = e.getActionCommand();
-		System.out.println("Action: " + action);
-		if (action.equals("button")) {
-			con.buttonClick(squares, e, curTurn, pieceList);
-		}
 
-	}
 						
-//	}
+	/**
+	 * updateBoard first gets an array of pieces. These arrays are what is passed between the host and client and it is
+	 * what allows stores the moves that have been made. The first thing updateBoard does is to wipe away all the pieces from the board
+	 * next it loops through the array of pieces pL and sets the square at the pieces location so that it now has the correct piece in
+	 * it. Then it calls drawBoard again to redraw the updated board. 
+	 * 
+	 */
 	
 	public void updateBoard(Piece[] pL) {
+		System.out.println("---updateBoard Start ---");
+		System.out.println("---Board, Line 282 ---");
 		pieceList = pL;
 		
 		for (int i = 0; i < 8; i++) {
@@ -263,8 +316,13 @@ public class Board extends JFrame implements ActionListener {
 		drawBoard();
 	}
 	
-	
+	/**
+	 * updateTurn is the main method used to track and switch between turns after someone makes a move.
+	 * 
+	 */
 	public void updateTurn() {
+		System.out.println("---updateTurn Start ---");
+		System.out.println("---Board, Line 318 ---");
 		if (curTurn == 'w') {
 			curTurn = 'b';
 		} else {
@@ -272,33 +330,25 @@ public class Board extends JFrame implements ActionListener {
 		}
 	}
 	
-	public void setTurn(char t) {
-		curTurn = t;
-	}
-	
-	public char getTurn() {
-		return curTurn;	
-	}
-	
-	public Piece[] getPL() {
-		return pieceList;
-	}
-	
+
+	/**
+	 * updates the minimum size that the chess board can be displayed at. 
+	 * Is called during board setup after every row of buttons is created
+	 */
 	private void updateMinSize(double d, double e) {
+		System.out.println("---updateMinSize Start ---");
+		System.out.println("---Board, Line 332 ---");
 		dim.setSize(d, e);
 	}
-	public Dimension getMinSize() {
-		return dim;
-	}
 	
-	public double getSizeX() {
-		return dim.getWidth();
-	}
-	public double getSizeY() {
-		return dim.getHeight();
-	}
+	/**
+	 * printPL prints the location of all the pieces on the current array pL
+	 * It is primarily used for more convenient debugging given this is something
+	 * the user will never really care about.
+	 */
 	public void printPL() {
-		
+		System.out.println("---printPL Start ---");
+		System.out.println("---Board, Line 342 ---");
 		System.out.println("----------- PieceList piece locations -----------");
 		for (int x = 0; x < 32; x++) {
 			System.out.print(pieceList[x].getId() + ":(" + pieceList[x].getX() + "," + pieceList[x].getY() + ") ");
@@ -306,11 +356,21 @@ public class Board extends JFrame implements ActionListener {
 		System.out.println("");
 	}
 	
-	public JPanel getChessBoard() {
-		return chessBoard;
+
+	/**
+	 * actionPerformed takes any action listener prompts for components created in Boards methods
+	 * and checks the action command. It then calls the corresponding method in Controller
+	 */
+	public void actionPerformed(ActionEvent e) {
+		System.out.println("---actionPerformed Start ---");
+		System.out.println("---Board, Line 356 ---");
+		String action = e.getActionCommand();
+		System.out.println("Action: " + action);
+		if (action.equals("button")) {
+			con.buttonClick(squares, e, curTurn, pieceList);
+		}
+
 	}
-	
-	
 
 
 }	

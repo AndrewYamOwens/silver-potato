@@ -17,13 +17,13 @@ public abstract class Piece {
 		
 		protected int destX;
 		protected int destY;
-		// false = white true = black
+
 		protected char side;
 		protected ImageIcon symbol;
 		
 		protected boolean hasMoved;
 		
-		// remove before final turn in 
+
 		protected int id;
 		protected Square destS;
 		protected boolean captured;

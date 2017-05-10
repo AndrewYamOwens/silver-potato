@@ -1,5 +1,7 @@
 package src;
 
+import java.awt.Color;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
@@ -11,11 +13,14 @@ public class Square {
 		public ImageIcon currentIcon;
 		protected int x;
 		protected int y;
+		private boolean selected = false;
+		private char color;
 
-		public Square(JButton button, int x, int y) {
+		public Square(JButton button, int x, int y, char color) {
 			this.button = button;
 			this.x = x;
 			this.y = y;
+			this.color = color;
 			currentIcon = null;
 			button.setIcon(currentIcon);
 			
@@ -77,6 +82,20 @@ public class Square {
 		public void iconSize() {
 			int x = currentIcon.getIconWidth(); 
 			int y = currentIcon.getIconHeight();
-			System.out.println("-+-+-+-+-+-+ Icon X:" + x + "    Icon Y:" + y + "  -+-+-+-+-+-+");
+		}
+		
+		public void toggleSelected() {
+			if (selected == false) {
+				button.setBackground(Color.YELLOW);
+				selected = true;
+			} else {
+				if (color == 'w') {
+					button.setBackground(Color.WHITE);
+					selected = false;
+				} else {
+					button.setBackground(Color.GRAY);
+					selected = false;
+				}
+			}
 		}
 }

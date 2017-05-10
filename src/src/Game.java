@@ -35,15 +35,82 @@ public class Game implements ActionListener {
 		this.con = con;
 	}
 	
+	/*
+	 * getters and setter
+	 */
+	public char getTurn() {
+		return currentTurn;
+	}
+	
+	private void create_pList(Board b) {
+			pList = b.getPL();
+	}
+	
+	public Piece[] getPList() {
+		return pList;
+	}
+	
+	public void updatePList(Piece[] npl) {
+		pList = npl;
+	}
+	private void set_bPieces() {
+		int a = 0;
+		for (int x = 0; x < 32; x++) {
+			if (pList[x].getColor() == 'w') {
+				bPieces[a] = pList[x];
+				a++;
+			}
+		}
+	}
+	
+	public Board getBoard() {
+		return cB;
+	}
+	
+	public JPanel getGameGui() {
+		return gui;
+	}
+	
+	public Dimension getMinSize() {
+		gui.setMinimumSize(d);
+		return d;
+	}
+	
+	private void updateMinSize(double minX, double minY) {
+		d.setSize(d.getWidth() + minX, d.getHeight() + minY);
+	}
+	
+	private void updateMinSize(Dimension minD) {
+		d.setSize(d.getWidth() + minD.getWidth(), d.getHeight() + minD.getHeight());
+	}
+	private void set_wPieces() {
+		int a = 0;
+		for (int x = 0; x < 32; x++) {
+			if (pList[x].getColor() == 'w') {
+				wPieces[a] = pList[x];
+				a++;
+			}
+		}
+	}
+	
+		/*gameSetup is called at the beginning when the game is first started. 
+		 * It creates the first piece array as well as creates an array for the white pieces and the black pieces.
+		 */
 	public void gameSetUp() {
-		System.out.println("gameSetUp Start");
+		System.out.println("---gameSetUp Start---");
+		System.out.println("---Game, Line 38 ---");
 		gameGUI();
 		create_pList(cB);
 		set_wPieces();
 		set_bPieces();
 	}
+		/*gameGUI is what really sets up the place for the board as well as the current turn text and the submit button. 
+		 * 
+		 */
 	
 	private void gameGUI() {
+		System.out.println("---gameGUI Start ---");
+		System.out.println("---Game, Line 47 ---");
 		Board b = new Board(frame, con, com);
 		cB = b;
 		JPanel board = b.getChessBoard();
@@ -94,8 +161,12 @@ public class Game implements ActionListener {
 		
 		
 	}
-	
+	/*
+	 * The method used to keep the current turn text up to date. 
+	 */
 	public void updateTLabel(char t) {
+		System.out.println("---updateTLabel Start ---");
+		System.out.println("---Game, Line 101 ---");
 		if (t == 'w') {
 			turn = "Current Turn: White";
 		} else {
@@ -107,82 +178,41 @@ public class Game implements ActionListener {
 		
 	}
 	
+	/*
+	 * the method that calls updateTLabel
+	 */
 	public void updateTurn(char t) {
+		System.out.println("---updateTurn Start ---");
+		System.out.println("---Game, Line 115 ---");
 		updateTLabel(t);
 		
 		currentTurn = t;
 		cB.setTurn(t);
-//		cB.updateTurn();
+
 		
 	}
 	
-	public char getTurn() {
-		return currentTurn;
-	}
 	
-	private void create_pList(Board b) {
-			pList = b.getPL();
-	}
 	
-	public Piece[] getPList() {
-		return pList;
-	}
 	
-	public void updatePList(Piece[] npl) {
-		pList = npl;
-	}
-	
-	private void set_wPieces() {
-		int a = 0;
-		for (int x = 0; x < 32; x++) {
-			if (pList[x].getColor() == 'w') {
-				wPieces[a] = pList[x];
-				a++;
-			}
-		}
-	}
-	
-	private void set_bPieces() {
-		int a = 0;
-		for (int x = 0; x < 32; x++) {
-			if (pList[x].getColor() == 'w') {
-				bPieces[a] = pList[x];
-				a++;
-			}
-		}
-	}
-	
-	public Board getBoard() {
-		return cB;
-	}
-	
-	public JPanel getGameGui() {
-		System.out.println("dim X:" + d.getWidth() + " dim Y:" + d.getHeight());
-		return gui;
-	}
-	
-	public Dimension getMinSize() {
-		gui.setMinimumSize(d);
-		return d;
-	}
-	
-	private void updateMinSize(double minX, double minY) {
-		d.setSize(d.getWidth() + minX, d.getHeight() + minY);
-	}
-	
-	private void updateMinSize(Dimension minD) {
-		d.setSize(d.getWidth() + minD.getWidth(), d.getHeight() + minD.getHeight());
-	}
-	
+	/*
+	 * Sets what the action command for the submit button does.
+	 */
 	public void actionPerformed(ActionEvent e) {
+		System.out.println("--- actionPerformed Start ---");
+		System.out.println("---Game, Line 206 ---");
 		String s = e.getActionCommand();
 		
 		if (s == "submit") {
 			con.submit(currentTurn);
-//			cB.updateTurn();
+
 		}
 	}
 
+	/*
+	 * Games iteration of updateBoard, it passes the piece list to the Board chess board.
+	 * It then sets the new piece array to be the current piece array.
+	 */
 	public void updateBoard(Piece[] pL) {
 		cB.updateBoard(pL);
 		updatePList(pL);
